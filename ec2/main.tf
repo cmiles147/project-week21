@@ -52,7 +52,7 @@ resource "aws_launch_template" "web_server" {
   }
 }
 
-data "aws_lb_target_group" "web_lb_tg" {
+data "aws_lb_target_group" "week21_lb_tg" {
   name = var.lb_tg_name
 }
 
