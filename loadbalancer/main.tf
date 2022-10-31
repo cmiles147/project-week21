@@ -29,6 +29,6 @@ resource "aws_lb_listener" "week21_lb_listener" {
   protocol          = var.listener_protocol
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.week21_lb_tg.arn
+    target_group_arn = aws_lb_target_group.week21-lb-tg.arn
   }
 }
