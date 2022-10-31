@@ -17,7 +17,7 @@ resource "aws_vpc" "week21_vpc" {
 
 resource "aws_subnet" "public_subnets" {
   count                   = var.public_sn_count
-  vpc_id                  = aws_vpc.project_vpc.id
+  vpc_id                  = aws_vpc.week21_vpc.id
   cidr_block              = var.public_cidrs[count.index]
   map_public_ip_on_launch = true
   availability_zone       = random_shuffle.public_az.result[count.index]
@@ -29,7 +29,7 @@ resource "aws_subnet" "public_subnets" {
 
 resource "aws_subnet" "private_subnets" {
   count                   = var.private_sn_count
-  vpc_id                  = aws_vpc.project_vpc.id
+  vpc_id                  = aws_vpc.week21_vpc.id
   cidr_block              = var.private_cidrs[count.index]
   map_public_ip_on_launch = false
   availability_zone       = random_shuffle.public_az.result[count.index]
@@ -109,7 +109,7 @@ resource "aws_route_table" "week21_private_rt" {
 resource "aws_route" "default_private_route" {
   route_table_id         = aws_route_table.week21_private_rt.id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id = aws_nat_gateway.project_ngw.id
+  nat_gateway_id = aws_nat_gateway.week21_ngw.id
 }
 
 resource "aws_route_table_association" "private_assoc" {

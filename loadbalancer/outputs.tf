@@ -10,5 +10,5 @@ output "lb_tg" {
 }
 
 output "alb_dns" {
-  value = aws_lb.web_lb.dns_name
+  value = aws_lb.week21_lb.dns_name
 }
