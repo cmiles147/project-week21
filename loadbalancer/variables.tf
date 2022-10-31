@@ -3,6 +3,7 @@
 
 variable "lb_sg" {}
 variable "public_subnets" {}
+variable "private_subnets" {}
 variable "web_asg" {}
 variable "tg_port" {}
 variable "tg_protocol" {}
