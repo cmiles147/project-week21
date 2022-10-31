@@ -5,8 +5,8 @@ module "networking" {
   vpc_cidr         = var.vpc_cidr
   private_sn_count = 3
   public_sn_count  = 3
-  private_cidrs    = [for i in range(1, 255, 2) : cidrsubnet(local.vpc_cidr, 8, i)]
-  public_cidrs     = [for i in range(2, 255, 2) : cidrsubnet(local.vpc_cidr, 8, i)]
+  private_cidrs    = [for i in range(1, 255, 2) : cidrsubnet(var.vpc_cidr, 8, i)]
+  public_cidrs     = [for i in range(2, 255, 2) : cidrsubnet(var.vpc_cidr, 8, i)]
   max_subnets      = 3
   access_ip        = var.access_ip
 }
@@ -27,7 +27,7 @@ module "loadbalancer" {
 module "ec2" {
   source                 = "./ec2"
   bastion_sg             = module.networking.bastion_sg
-  web_sg                 = module.networking.week21_sg
+  web_sg                 = module.networking.web_sg
   public_subnets         = module.networking.public_subnets
   private_subnets        = module.networking.private_subnets
   bastion_instance_count = 1
