@@ -5,8 +5,8 @@ module "networking" {
   vpc_cidr         = var.vpc_cidr
   private_sn_count = 3
   public_sn_count  = 3
-  private_cidrs    = [for i in range(1, 255, 2) : cidrsubnet(local.vpc_cidr, 8, i)]
-  public_cidrs     = [for i in range(2, 255, 2) : cidrsubnet(local.vpc_cidr, 8, i)]
+  private_cidrs    = [for i in range(1, 255, 2) : cidrsubnet(var.vpc_cidr, 8, i)]
+  public_cidrs     = [for i in range(2, 255, 2) : cidrsubnet(var.vpc_cidr, 8, i)]
   max_subnets      = 3
   access_ip        = var.access_ip
 }
@@ -16,7 +16,7 @@ module "loadbalancer" {
   source            = "./loadbalancer"
   lb_sg             = module.networking.lb_sg
   public_subnets    = module.networking.public_subnets
-  private_subnets   = module.netwroking.private_subnets
+  private_subnets   = module.networking.private_subnets
   tg_port           = 80
   tg_protocol       = "HTTP"
   vpc_id            = module.networking.vpc_id
@@ -34,7 +34,7 @@ module "ec2" {
   bastion_instance_count = 1
   instance_type          = "t2.micro"
   key_name               = "MyKey"
-  user_data              = filebase64("./userdata.tpl")
-  lb_tg_name             = module.loadbalancing.lb_tg_name
-  lb_tg                  = module.loadbalancing.lb_tg
+  user_data              = filebase64("./bootstrap.sh")
+  lb_tg_name             = module.loadbalancer.lb_tg_name
+  lb_tg                  = module.loadbalancer.lb_tg
 }
