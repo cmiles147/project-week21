@@ -3,8 +3,10 @@
 data "aws_ami" "amazon_linux_2" {
   most_recent = true
   
-  name   = "owner-alias"
-  values = ["amazon"]
+  filter {
+    name = "owner-alias"
+    values = ["amazon"]
+  }
 
   filter {
     name   = "name"
@@ -17,7 +19,7 @@ data "aws_ami" "amazon_linux_2" {
 resource "aws_launch_template" "bastion_host" {
   name_prefix = "bastion_host"
   instance_type = var.instance_type
-  image_id          = data.aws_ami.amazon_linux_2i.id
+  image_id          = data.aws_ami.amazon_linux_2.id
   vpc_security_group_ids = [var.bastion_sg]
   key_name = var.key_name
 
