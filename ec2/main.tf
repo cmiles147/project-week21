@@ -63,7 +63,7 @@ resource "aws_autoscaling_group" "web_server_asg" {
   max_size            = 5
   desired_capacity    = 2
 
-  target_group_arns = [data.aws_lb_target_group.web_lb_tg.arn]
+  target_group_arns = [data.aws_lb_target_group.week21_lb_tg.arn]
 
   launch_template {
     id      = aws_launch_template.web_server.id
