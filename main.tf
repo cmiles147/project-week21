@@ -15,13 +15,11 @@ module "networking" {
 module "loadbalancer" {
   source            = "./loadbalancer"
   lb_sg             = module.networking.lb_sg
-  private_subnets    = module.networking.private_subnets
-  tg_port           = 80
-  tg_protocol       = "HTTP"
+  public_subnets    = module.networking.public_subnets
+  listen_port       = 80
+  listener_protocol = "HTTP"
   vpc_id            = module.networking.vpc_id
   web_asg           = module.ec2.web_asg
-  listener_port     = 80
-  
 }
 
 module "ec2" {
