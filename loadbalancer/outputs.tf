@@ -2,11 +2,11 @@
 
 
 output "lb_tg_name" {
-  value = aws_lb_target_group.week21_lb_tg.name
+  value = aws_lb_target_group.week21-lb-tg.name
 }
 
 output "lb_tg" {
-  value = aws_lb_target_group.week21_lb_tg.arn
+  value = aws_lb_target_group.week21-lb-tg.arn
 }
 
 output "alb_dns" {
