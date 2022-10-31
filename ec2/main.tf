@@ -1,13 +1,14 @@
 #---ec2/main.tf---
 
-data "aws_ami" "server_ami" {
+data "aws_ami" "amazon_linux_2" {
   most_recent = true
-
-  owners = ["134733923762"]
+  
+  name   = "owner-alias"
+  values = ["amazon"]
 
   filter {
     name   = "name"
-    values = ["amazon2-ami-kernel-5.10-hvm-2.0.*.0-x86_64-gp2"]
+    values = ["amzn2-ami-kernel-5.10-hvm-2.0.*.0-x86_64-gp2"]
   }
 }
 
@@ -16,7 +17,7 @@ data "aws_ami" "server_ami" {
 resource "aws_launch_template" "bastion_host" {
   name_prefix = "bastion_host"
   instance_type = var.instance_type
-  image_id          = data.aws_ami.server_ami.id
+  image_id          = data.aws_ami.amazon_linux_2i.id
   vpc_security_group_ids = [var.bastion_sg]
   key_name = var.key_name
 
@@ -26,7 +27,7 @@ resource "aws_launch_template" "bastion_host" {
 }
   resource "aws_autoscaling_group" "bastion_host_asg" {
   name                = "bastion-asg"
-  vpc_zone_identifier = var.private_subnets
+  vpc_zone_identifier = var.public_subnets
   min_size            = 1
   max_size            = 1
   desired_capacity    = 1
@@ -42,7 +43,7 @@ resource "aws_launch_template" "bastion_host" {
 resource "aws_launch_template" "web_server" {
   name_prefix   = "web-server"
   instance_type = var.instance_type
-  image_id           = data.aws_ami.server_ami.id
+  image_id           = data.aws_ami.amazon_linux_2.id
   vpc_security_group_ids = [var.web_sg]
   key_name = var.key_name
   user_data = var.user_data
@@ -61,7 +62,7 @@ resource "aws_autoscaling_group" "web_server_asg" {
   vpc_zone_identifier = var.private_subnets
   min_size            = 2
   max_size            = 5
-  desired_capacity    = 2
+  desired_capacity    = 3
 
   target_group_arns = [data.aws_lb_target_group.week21_lb_tg.arn]
 
