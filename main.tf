@@ -32,7 +32,7 @@ module "ec2" {
   private_subnets        = module.networking.private_subnets
   bastion_instance_count = 1
   instance_type          = "t2.micro"
-  key_name               = "MyKey"
+  key_name               = var.key_name
   user_data              = filebase64("./bootstrap.sh")
   lb_tg_name             = module.loadbalancer.lb_tg_name
   lb_tg                  = module.loadbalancer.lb_tg
