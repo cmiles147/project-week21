@@ -12,7 +12,7 @@ resource "aws_lb" "week21_lb" {
   ]
 }
 
-resource "aws_lb_target_group" "week21_lb_tg" {
+resource "aws_lb_target_group" "week21-lb-tg" {
   name     = "week21-lb-tg"
   port     = var.tg_port
   protocol = var.tg_protocol
